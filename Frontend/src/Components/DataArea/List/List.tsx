@@ -26,7 +26,7 @@ async function displayMeetings(args:ChangeEvent<HTMLSelectElement>){
 
     return (
         <div className="List">
-			<label >Select Target Audience</label>
+			<label >Select Developments Group:</label>
             <select defaultValue="" onChange={displayMeetings}>
                 <option disabled value="">select..</option>
                
