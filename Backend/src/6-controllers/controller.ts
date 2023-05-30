@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import logic from "../5-logic/MeetingsLogic";
 import MeetingsLogic from "../5-logic/MeetingsLogic";
+import MeetingModel from "../4-models/meeting-model";
 
 const router = express.Router(); // Capital R
 
@@ -23,6 +24,18 @@ router.get("/meetings-by-developments-group/:developmentsGroupId", async (reques
        const meetings=await MeetingsLogic.getAllMeetingsByDevelopmentGroup(developmentsGroupId)
        response.json(meetings)
 
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
+router.post("/meetings", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+    const meeting=new MeetingModel(request.body)
+    const addedMeeting=await MeetingsLogic.addMeeting(meeting)
+    response.status(201).json(addedMeeting)
+    
     }
     catch (err: any) {
         next(err);
