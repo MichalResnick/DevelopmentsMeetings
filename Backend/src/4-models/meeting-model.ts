@@ -1,12 +1,12 @@
 import Joi from "joi"
 
 class MeetingModel{
-    meetingId:number
-    developmentsGroupId:number
-    beginningTime:string
-    endTime:string
-    description:string
-    meetingRoom:string
+    public meetingId:number
+    public developmentsGroupId:number
+    public beginningTime:string
+    public endTime:string
+    public description:string
+    public meetingRoom:string
 
     public constructor(meeting:MeetingModel){
         this.meetingId=meeting.meetingId
@@ -20,8 +20,8 @@ class MeetingModel{
     public  static validationSchema=Joi.object({
         meetingId:Joi.number().required().positive().optional().integer(),
         developmentsGroupId:Joi.number().required().positive().optional().integer(),
-        beginningTime:Joi.date().iso().required(),
-        endTime:Joi.date().iso().required(),
+        beginningTime:Joi.date().required(),
+        endTime:Joi.date().required(),
         description:Joi.string().required(),
         meetingRoom:Joi.string().required()
 

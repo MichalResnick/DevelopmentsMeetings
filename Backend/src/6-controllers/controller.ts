@@ -41,4 +41,28 @@ router.post("/meetings", async (request: Request, response: Response, next: Next
         next(err);
     }
 });
+
+router.put("/meetings/:meetingId", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+    request.body.meetingId=+request.params.meetingId
+    const meeting=new MeetingModel(request.body)
+    const updatedMeeting=await MeetingsLogic.updateMeeting(meeting)
+    response.status(201).json(updatedMeeting)
+    
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+router.delete("/meetings/:meetingId", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+    const meetingId=+request.params.meetingId
+    await MeetingsLogic.deleteMeeting(meetingId)
+    response.sendStatus(204)
+    
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
 export default router;

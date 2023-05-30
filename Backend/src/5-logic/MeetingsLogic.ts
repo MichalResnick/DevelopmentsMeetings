@@ -2,7 +2,7 @@ import { OkPacket } from "mysql";
 import dal from "../2-utils/dal";
 import DevelopmentsGroup from "../4-models/developmentsGroup-model";
 import MeetingModel from "../4-models/meeting-model";
-import { ValidationErrorModel } from "../4-models/error-models";
+import { ResourceNotFoundErrorModel, ValidationErrorModel } from "../4-models/error-models";
 
 
 async function getAllDevelopmentGroups():Promise<DevelopmentsGroup[]>{
@@ -44,10 +44,44 @@ async function addMeeting(meeting:MeetingModel):Promise<MeetingModel>{
     return meeting
 }
 
+async function updateMeeting(meeting:MeetingModel):Promise<MeetingModel>{
+
+    const error=meeting.validate()
+    if (error) throw new ValidationErrorModel(error)
+
+    const sql=`
+    UPDATE meetings SET
+    developmentsGroupId=?,
+    beginningTime=?,
+    endTime=?,
+    description=?,
+    meetingRoom=?
+    WHERE meetingId =? `;
+
+    const values=[meeting.developmentsGroupId,meeting.beginningTime,meeting.endTime,meeting.description,meeting.meetingRoom,meeting.meetingId]
+    const info:OkPacket=await dal.execute(sql,values)
+    if(info.affectedRows===0) throw new ResourceNotFoundErrorModel(meeting.meetingId)
+
+    return meeting
+
+}
+
+async function deleteMeeting(meetingId:number):Promise<void>{
+    const sql=`
+    DELETE FROM meetings
+    WHERE meetingId=?
+    `
+    const info:OkPacket=await dal.execute(sql,[meetingId])
+    if(info.affectedRows===0) throw new ResourceNotFoundErrorModel(meetingId)
+
+}
+
 
 
 export default {
     getAllDevelopmentGroups,
     getAllMeetingsByDevelopmentGroup,
-    addMeeting
+    addMeeting,
+    deleteMeeting,
+    updateMeeting
 };
