@@ -16,10 +16,19 @@ class DataService {
         const meetings=response.data
         return meetings
     }
-       
-     public async addMeeting(meeting:MeetingModel):Promise<void>{
-        await axios.post(appConfig.addMeetingUrl,meeting)
 
+      
+    public async addMeeting(meeting:MeetingModel):Promise<void>{
+        await axios.post<MeetingModel>(appConfig.meetingsUrl,meeting)
+
+     }
+
+    public async updateMeeting(meeting:MeetingModel):Promise<void>{
+        await axios.put<MeetingModel>(appConfig.meetingsUrl,meeting)
+     }
+
+     public async deleteMeeting(meetingId:number):Promise<void>{
+        await axios.delete<MeetingModel>(appConfig.meetingsUrl+meetingId)
      }
 
 
