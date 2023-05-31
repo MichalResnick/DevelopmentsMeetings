@@ -1,3 +1,37 @@
 .Insert {
-	
-}
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #db9b9b;
+    border-radius: 8px;
+    /* box-shadow: 0 4px 6px rgba(63, 200, 74, 0.1); */
+    box-shadow: 12px 0px 20px 0px black;
+  }
+  
+  .Insert form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Insert input,
+  .Insert select,
+  .Insert textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .Insert button[type="submit"] {
+    padding: 10px 20px;
+    background: blue;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .Insert button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
